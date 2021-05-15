@@ -1,6 +1,8 @@
 #include <immintrin.h>
+#include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include "profile.h"
 
 inline void prefetchs_s(char *d, const char *p, size_t sz) {
 # pragma omp parallel for
@@ -178,8 +180,17 @@ int main() {
   auto ret = posix_memalign(&p, 64, size);
   ret = posix_memalign(&d, 64, size);
   memset(p, 1, size);
+  memset(d, 1, size);
 
-  constexpr int times = 2000 * 100;
+  constexpr int times = 2000;
+
+  auto start = Time::now();
+
   for (int i =0; i < times; i ++)
-    prefetchs_s((char *)d, (const char*)p, size);
+    prefetchs_y((char *)d, (const char*)p, size);
+
+  auto duration =
+    std::chrono::duration_cast<
+      std::chrono::microseconds>(Time::now() - start).count();
+  std::cout<<"exe_duration "<<duration<<"us"<<std::endl;
 }

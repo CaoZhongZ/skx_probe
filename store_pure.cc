@@ -69,5 +69,5 @@ int main() {
 
   constexpr int times = 2000 * 100;
   for (int i =0; i < times; i ++)
-    prefetchs_s((char *)d, (const char*)p, size);
+    prefetchs((char *)d, (const char*)p, size);
 }
