@@ -99,7 +99,7 @@ static void set_rand_tiledata(struct tile_buffer *tbuf)
 	 */
 
 	for (i = 0; i < MAX_ELEMENTS; i++) {
-		data = (rand() % 0xff) | 1;
+		data = (rand() % 0xff);
 		tbuf->bytes[i] = data;
 	}
 }
@@ -191,9 +191,9 @@ inline void test_tdpbuud(struct tile_buffer *tbuf, int times)
   }
   auto duration =
     std::chrono::duration_cast<
-    std::chrono::microseconds>(Time::now() - start).count();
+    std::chrono::nanoseconds>(Time::now() - start).count();
   std::cout << "---------------test tdpbuud----------------" << std::endl;
-  std::cout<<"012 exe_duration "<<duration<<"us"<<std::endl;
+  std::cout<<"012 exe_duration "<< (float)duration / (float)times <<" ns"<<std::endl;
   std::cout << "-------------------------------" << std::endl;
 
   start = Time::now();
@@ -638,7 +638,6 @@ inline void test_tdpbsud(struct tile_buffer *tbuf, int times)
   std::cout << "---------------test tdpbsud----------------" << std::endl;
 }
 
-
 inline void test_tdpbssd(struct tile_buffer *tbuf, int times)
 {
   auto start = Time::now();
@@ -872,7 +871,6 @@ inline void test_tdpbssd(struct tile_buffer *tbuf, int times)
   std::cout<<"345+467 exe_duration "<<duration<<"us"<<std::endl;
   std::cout << "---------------test tdpbssd----------------" << std::endl;
 }
-
 
 inline void test_tdpbusd(struct tile_buffer *tbuf, int times)
 {
@@ -1139,9 +1137,9 @@ int main(int argc, char* argv[]) {
   print_tile(tbuf);
 
   test_tdpbuud(tbuf, times);
-  test_tdpbsud(tbuf, times);
-  test_tdpbusd(tbuf, times);
-  test_tdpbssd(tbuf, times);
+  // test_tdpbsud(tbuf, times);
+  // test_tdpbusd(tbuf, times);
+  // test_tdpbssd(tbuf, times);
 
   std::cout << "Job Done!" << std::endl;
   return 0;

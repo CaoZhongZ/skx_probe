@@ -139,13 +139,13 @@ inline void prefetchs(char *d, const char *p, size_t sz) {
 }
 
 int main() {
-  constexpr size_t size = 0x40000000ull;
+  constexpr size_t size = 68719476736ull;
   void *p, *d;
   posix_memalign(&p, 64, size);
   posix_memalign(&d, 64, size/32);
   memset(p, 1, size);
 
-  constexpr int times = 1024;
+  constexpr int times = 1024*18;
   for (int i =0; i < times; i ++)
     prefetchs_y((char *)d, (const char*)p, size);
 }
